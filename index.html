@@ -3,12 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Phụ Kiện Điện Thoại</title>
-    <!-- Bootstrap CSS -->
     <link href="bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS tùy chỉnh */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding-top: 56px;
@@ -68,10 +65,10 @@
             color: #666;
         }
         .product-card .card-img-top {
-    height: 250px; /* Chiều cao cố định */
+    height: 250px;
     width: 100%;
-    object-fit: cover; /* Đảm bảo ảnh giữ tỷ lệ và lấp đầy khung */
-    object-position: center; /* Căn giữa ảnh */
+    object-fit: cover;
+    object-position: center; 
 }
 
 
@@ -83,16 +80,15 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="btl.html"><i class="fab fa-apple me-2"></i>Cuongstore</a>
+            <a class="navbar-brand" href="index.html"><i class="fab fa-apple me-2"></i>Cuongstore</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="btl.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="#4r">Sản phẩm</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Khuyến mãi</a></li>
                     <li class="nav-item"><a class="nav-link" href="#5r">Liên hệ</a></li>
@@ -111,8 +107,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- Carousel/Slider -->
     <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
@@ -141,8 +135,6 @@
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
-
-    <!-- Main Content -->
     <div class="container my-5">
         <div class="row">
             <!-- Sidebar -->
@@ -194,11 +186,8 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Product List -->
             <div class="col-md-9" id="4r">
                 <h2 class="mb-4"><i class="fas fa-star me-2"></i>Sản phẩm nổi bật</h2>
-                
                 <div class="no-products">
                     <i class="fas fa-search fa-3x mb-3"></i>
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
@@ -206,7 +195,6 @@
                 </div>
                 
                 <div class="row product-container">
-                    <!-- Product 1 -->
                     <div class="col-md-4 mb-4 product-item" data-price="199000" data-category="ốp lưng">
                         <div class="card h-100 product-card">
                             <span class="badge bg-danger position-absolute" style="top:10px; right:10px;">-20%</span>
@@ -225,8 +213,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 2 -->
                     <div class="col-md-4 mb-4 product-item" data-price="350000" data-category="tai nghe">
                         <div class="card h-100 product-card">
                             <img src="tai-nghe-bluetooth-airpods-pro-2nd-gen-usb-c-charge-apple-1-750x500.jpg" class="card-img-top" alt="Tai nghe Bluetooth">
@@ -242,8 +228,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 3 -->
                     <div class="col-md-4 mb-4 product-item" data-price="89000" data-category="cáp sạc">
                         <div class="card h-100 product-card">
                             <span class="badge bg-success position-absolute" style="top:10px; right:10px;">Mới</span>
@@ -261,8 +245,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 4 -->
                     <div class="col-md-4 mb-4 product-item" data-price="450000" data-category="sạc dự phòng">
                         <div class="card h-100 product-card">
                             <img src="sac-pin-du-phong-xiaomi-30000mah-18w_4_.webp" class="card-img-top" alt="Sạc dự phòng">
@@ -278,8 +260,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 5 -->
                     <div class="col-md-4 mb-4 product-item" data-price="150000" data-category="miếng dán">
                         <div class="card h-100 product-card">
                             <span class="badge bg-danger position-absolute" style="top:10px; right:10px;">-15%</span>
@@ -297,8 +277,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 6 -->
                     <div class="col-md-4 mb-4 product-item" data-price="299000" data-category="ốp lưng">
                         <div class="card h-100 product-card">
                             <img src="airpods-4-hero-select-202409.jpg" class="card-img-top" alt="Ốp lưng đa năng">
@@ -314,8 +292,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 7 -->
                     <div class="col-md-4 mb-4 product-item" data-price="1200000" data-category="tai nghe">
                         <div class="card h-100 product-card">
                             <span class="badge bg-warning position-absolute" style="top:10px; right:10px;">Bán chạy</span>
@@ -332,8 +308,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 8 -->
                     <div class="col-md-4 mb-4 product-item" data-price="250000" data-category="cáp sạc">
                         <div class="card h-100 product-card">
                             <img src="MUWA3_AV1.jpg" class="card-img-top" alt="Cáp đa năng">
@@ -349,8 +323,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Product 9 -->
                     <div class="col-md-4 mb-4 product-item" data-price="650000" data-category="sạc dự phòng">
                         <div class="card h-100 product-card">
                             <span class="badge bg-info position-absolute" style="top:10px; right:10px;">Mới</span>
@@ -368,8 +340,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Pagination -->
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
@@ -385,9 +355,6 @@
                 </nav>
             </div>
         </div>
-    </div>
-
-    <!-- Footer -->
     <footer class="bg-dark text-white">
         <div class="container" id="5r">
             <div class="row">
@@ -423,39 +390,24 @@
             </div>
         </div>
     </footer>
-
-    <!-- jQuery -->
     <script src="jquery-3.7.1.js"></script>
-    <!-- Bootstrap JS -->
     <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
-    <!-- Custom JS -->
     <script>
         $(document).ready(function() {
-            // Xử lý thêm vào giỏ hàng
             $('.add-to-cart').click(function() {
                 const productId = $(this).data('id');
                 const productName = $(this).closest('.card').find('.card-title').text();
-                
-                // Hiển thị thông báo
                 alert('Đã thêm "' + productName + '" vào giỏ hàng!');
-                
-                // Cập nhật số lượng trong giỏ hàng
                 const currentCount = parseInt($('.badge.bg-danger').text());
                 $('.badge.bg-danger').text(currentCount + 1);
-                
-                // Thêm hiệu ứng
                 $(this).html('<i class="fas fa-check"></i> Đã thêm');
                 $(this).removeClass('btn-outline-primary').addClass('btn-success');
-                
-                // Reset sau 2 giây
                 setTimeout(() => {
                     $(this).html('Thêm vào giỏ');
                     $(this).removeClass('btn-success').addClass('btn-outline-primary');
                 }, 2000);
                 
             });
-            
-            // Xử lý tìm kiếm
             $('#searchButton').click(function() {
                 const keyword = $('#searchInput').val().trim().toLowerCase();
                 if(keyword.length > 0) {
@@ -473,8 +425,6 @@
                     $('.no-products').hide();
                 }
             });
-            
-            // Xử lý khi nhấn Enter trong ô tìm kiếm
             $('#searchInput').keypress(function(e) {
                 if(e.which === 13) {
                     $('#searchButton').click();
@@ -491,7 +441,6 @@
                 }
             );
             
-            // Xử lý lọc theo giá
             $('.price-filter-option').change(function() {
     const selectedPrice = $(this).val();
     
@@ -516,10 +465,8 @@
         let shouldShow = false;
         
         if (selectedPrice === '1000000-') {
-            // Trường hợp "Trên 1.000.000đ"
             shouldShow = actualPrice >= minPrice;
         } else {
-            // Các trường hợp khoảng giá khác
             shouldShow = actualPrice >= minPrice && actualPrice <= maxPrice;
         }
         
@@ -531,7 +478,6 @@
         }
     });
     
-    // Hiển thị thông báo nếu không có sản phẩm nào phù hợp
     $('.no-products').toggle(!hasVisibleProducts);
 });
         });
