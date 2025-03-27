@@ -65,10 +65,10 @@
             color: #666;
         }
         .product-card .card-img-top {
-    height: 250px;
+    height: 250px; 
     width: 100%;
     object-fit: cover;
-    object-position: center; 
+    object-position: center;
 }
 
 
@@ -137,7 +137,6 @@
     </div>
     <div class="container my-5">
         <div class="row">
-            <!-- Sidebar -->
             <div class="col-md-3">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
@@ -188,6 +187,7 @@
             </div>
             <div class="col-md-9" id="4r">
                 <h2 class="mb-4"><i class="fas fa-star me-2"></i>Sản phẩm nổi bật</h2>
+                
                 <div class="no-products">
                     <i class="fas fa-search fa-3x mb-3"></i>
                     <h4>Không tìm thấy sản phẩm phù hợp</h4>
@@ -355,6 +355,7 @@
                 </nav>
             </div>
         </div>
+    </div>
     <footer class="bg-dark text-white">
         <div class="container" id="5r">
             <div class="row">
@@ -382,7 +383,6 @@
                         <input type="email" class="form-control" placeholder="Email của bạn">
                         <button class="btn btn-primary" type="button">Đăng ký</button>
                     </div>
-                </div>
                 </div>
             </div>
             <hr>
@@ -431,8 +431,6 @@
                     $('#searchButton').click();
                 }
             });
-            
-            // Hiệu ứng khi di chuột qua sản phẩm
             $('.product-card').hover(
                 function() {
                     $(this).find('.card-title').css('color', '#0d6efd');
@@ -441,7 +439,6 @@
                     $(this).find('.card-title').css('color', '');
                 }
             );
-            
             $('.price-filter-option').change(function() {
     const selectedPrice = $(this).val();
     
@@ -460,7 +457,7 @@
     $('.product-item').each(function() {
         const price = parseInt($(this).data('price'));
         let priceText = $(this).find('.text-danger.fw-bold').text();
-        priceText = priceText.replace(/[^\d]/g, ''); // Loại bỏ tất cả ký tự không phải số
+        priceText = priceText.replace(/[^\d]/g, '');
         const actualPrice = parseInt(priceText) || price;
         
         let shouldShow = false;
@@ -478,7 +475,6 @@
             $(this).hide();
         }
     });
-    
     $('.no-products').toggle(!hasVisibleProducts);
 });
         });
