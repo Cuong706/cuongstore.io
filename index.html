@@ -72,6 +72,19 @@
 }
 
 
+#cartModal .modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.quantity-input {
+    max-width: 50px;
+}
+
+#checkoutButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 @media (max-width: 768px) {
     .product-card .card-img-top {
         height: 180px;
@@ -99,9 +112,9 @@
                         <button class="btn btn-light" type="button" id="searchButton"><i class="fas fa-search"></i></button>
                     </div>
                     <a href="#" class="btn btn-outline-light me-2"><i class="fas fa-user"></i></a>
-                    <a href="#" class="btn btn-outline-light position-relative">
+                    <a href="#" class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
                     </a>
                 </div>
             </div>
@@ -390,25 +403,260 @@
                 <p class="mb-0">&copy; 2025 CuongStore. All rights reserved.</p>
             </div>
         </div>
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="cartModalLabel"><i class="fas fa-shopping-cart me-2"></i>Giỏ Hàng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems">
+                            <tr id="emptyCartMessage">
+                                <td colspan="5" class="text-center py-4">Giỏ hàng của bạn đang trống</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                                <td colspan="2" class="fw-bold" id="cartTotal">0đ</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tiếp tục mua sắm</button>
+                <button type="button" class="btn btn-primary" id="checkoutButton">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+</div>
     </footer>
     <script src="jquery-3.7.1.js"></script>
     <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.add-to-cart').click(function() {
-                const productId = $(this).data('id');
-                const productName = $(this).closest('.card').find('.card-title').text();
-                alert('Đã thêm "' + productName + '" vào giỏ hàng!');
-                const currentCount = parseInt($('.badge.bg-danger').text());
-                $('.badge.bg-danger').text(currentCount + 1);
-                $(this).html('<i class="fas fa-check"></i> Đã thêm');
-                $(this).removeClass('btn-outline-primary').addClass('btn-success');
-                setTimeout(() => {
-                    $(this).html('Thêm vào giỏ');
-                    $(this).removeClass('btn-success').addClass('btn-outline-primary');
-                }, 2000);
-                
+       $(document).ready(function() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    function updateCartCount() {
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        $('#cartCount').text(totalItems);
+    }
+    function displayCart() {
+        const cartItems = $('#cartItems');
+        cartItems.empty();
+        
+        if (cart.length === 0) {
+            cartItems.append('<tr id="emptyCartMessage"><td colspan="5" class="text-center py-4">Giỏ hàng của bạn đang trống</td></tr>');
+            $('#cartTotal').text('0đ');
+            $('#checkoutButton').prop('disabled', true);
+            return;
+        }
+        
+        $('#checkoutButton').prop('disabled', false);
+        
+        let total = 0;
+        
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            
+            const row = `
+                <tr data-id="${item.id}">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;" class="me-3">
+                            <div>
+                                <h6 class="mb-0">${item.name}</h6>
+                                <small class="text-muted">${item.description}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${formatPrice(item.price)}đ</td>
+                    <td>
+                        <div class="input-group" style="width: 120px;">
+                            <button class="btn btn-outline-secondary decrease-quantity" type="button">-</button>
+                            <input type="text" class="form-control text-center quantity-input" value="${item.quantity}" readonly>
+                            <button class="btn btn-outline-secondary increase-quantity" type="button">+</button>
+                        </div>
+                    </td>
+                    <td>${formatPrice(itemTotal)}đ</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+            
+            cartItems.append(row);
+        });
+        
+        $('#cartTotal').text(formatPrice(total) + 'đ');
+    }
+    function formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    $('.add-to-cart').click(function() {
+        const productCard = $(this).closest('.product-card');
+        const productId = $(this).data('id');
+        const productName = productCard.find('.card-title').text();
+        const productDescription = productCard.find('.card-text.text-muted').text();
+        const priceText = productCard.find('.text-danger.fw-bold').text();
+        const price = parseInt(priceText.replace(/[^\d]/g, ''));
+        const image = productCard.find('.card-img-top').attr('src');
+        const existingItem = cart.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: productId,
+                name: productName,
+                description: productDescription,
+                price: price,
+                quantity: 1,
+                image: image
             });
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+
+        $(this).html('<i class="fas fa-check"></i> Đã thêm');
+        $(this).removeClass('btn-outline-primary').addClass('btn-success');
+        
+        setTimeout(() => {
+            $(this).html('Thêm vào giỏ');
+            $(this).removeClass('btn-success').addClass('btn-outline-primary');
+        }, 2000);
+    });
+    
+    $(document).on('click', '.remove-item', function() {
+        const productId = $(this).closest('tr').data('id');
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+    });
+    
+    $(document).on('click', '.increase-quantity', function() {
+        const productId = $(this).closest('tr').data('id');
+        const item = cart.find(item => item.id === productId);
+        item.quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+    });
+    
+    $(document).on('click', '.decrease-quantity', function() {
+        const productId = $(this).closest('tr').data('id');
+        const item = cart.find(item => item.id === productId);
+        
+        if (item.quantity > 1) {
+            item.quantity -= 1;
+        } else {
+            cart = cart.filter(item => item.id !== productId);
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        displayCart();
+    });
+    
+    $('#checkoutButton').click(function() {
+        alert('Chức năng thanh toán sẽ được thực hiện sau!');
+    });
+    
+
+    $('#cartModal').on('show.bs.modal', function() {
+        displayCart();
+    });
+    
+
+    updateCartCount();
+    $('#searchButton').click(function() {
+        const keyword = $('#searchInput').val().trim().toLowerCase();
+        if(keyword.length > 0) {
+            $('.product-item').each(function() {
+                const productName = $(this).find('.card-title').text().toLowerCase();
+                if(productName.includes(keyword)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+            checkVisibleProducts();
+        } else {
+            $('.product-item').show();
+            $('.no-products').hide();
+        }
+    });
+    
+    $('#searchInput').keypress(function(e) {
+        if(e.which === 13) {
+            $('#searchButton').click();
+        }
+    });
+    
+    $('.product-card').hover(
+        function() {
+            $(this).find('.card-title').css('color', '#0d6efd');
+        },
+        function() {
+            $(this).find('.card-title').css('color', '');
+        }
+    );
+    
+    $('.price-filter-option').change(function() {
+        const selectedPrice = $(this).val();
+        
+        if(selectedPrice === 'all') {
+            $('.product-item').show();
+            $('.no-products').hide();
+            return;
+        }
+        
+        const priceRange = selectedPrice.split('-');
+        const minPrice = parseInt(priceRange[0]) || 0;
+        const maxPrice = parseInt(priceRange[1]) || Infinity;
+        
+        let hasVisibleProducts = false;
+        
+        $('.product-item').each(function() {
+            const price = parseInt($(this).data('price'));
+            let priceText = $(this).find('.text-danger.fw-bold').text();
+            priceText = priceText.replace(/[^\d]/g, '');
+            const actualPrice = parseInt(priceText) || price;
+            
+            let shouldShow = false;
+            
+            if (selectedPrice === '1000000-') {
+                shouldShow = actualPrice >= minPrice;
+            } else {
+                shouldShow = actualPrice >= minPrice && actualPrice <= maxPrice;
+            }
+            
+            if(shouldShow) {
+                $(this).show();
+                hasVisibleProducts = true;
+            } else {
+                $(this).hide();
+            }
+        });
+        $('.no-products').toggle(!hasVisibleProducts);
+    });
+});
             $('#searchButton').click(function() {
                 const keyword = $('#searchInput').val().trim().toLowerCase();
                 if(keyword.length > 0) {
@@ -477,7 +725,9 @@
     });
     $('.no-products').toggle(!hasVisibleProducts);
 });
-        });
+     
+ 
     </script>
+    
 </body>
 </html>
